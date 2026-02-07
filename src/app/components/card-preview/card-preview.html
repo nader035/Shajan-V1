@@ -1,0 +1,80 @@
+<div class="flex flex-col items-center py-20 animate-fade-in">
+  <div
+    id="shajan-card"
+    class="relative w-[380px] h-[675px] bg-shajan-dark rounded-[3.5rem] overflow-hidden shadow-[0_40px_100px_rgba(0,0,0,0.8)] border border-white/5 flex flex-col items-center justify-between p-14 text-center"
+  >
+    <div
+      class="absolute inset-0 bg-gradient-to-b from-shajan-maroon/30 via-transparent to-black pointer-events-none"
+    ></div>
+
+    <div
+      class="absolute top-[-10%] left-[-10%] w-full h-full bg-[radial-gradient(circle,rgba(197,160,89,0.05)_0%,transparent_70%)] pointer-events-none"
+    ></div>
+
+    <div class="relative z-10 flex-1 flex items-center justify-center w-full px-2">
+      @if (store.isLoading()) {
+        <div class="flex flex-col items-center gap-3">
+          <div class="h-1 w-20 bg-shajan-gold/20 animate-pulse rounded-full"></div>
+          <div class="h-1 w-32 bg-shajan-gold/10 animate-pulse delay-75 rounded-full"></div>
+        </div>
+      } @else {
+        <p
+          [class]="dynamicFontSize()"
+          class="font-tajawal text-white italic leading-relaxed whitespace-pre-line drop-shadow-2xl transition-all duration-1000 ease-out"
+          style="unicode-bidi: plaintext"
+        >
+          {{
+            store.generatedContent() ||
+              (isArabic() ? 'صدى روحك سيظهر هنا' : 'Your soul’s echo will appear here')
+          }}
+        </p>
+      }
+    </div>
+
+    <div class="relative z-20 flex flex-col items-center gap-4">
+      <div class="h-[0.5px] w-12 bg-shajan-gold/30"></div>
+      <div class="flex flex-col gap-1.5">
+        <span class="text-shajan-gold text-[10px] tracking-[0.5em] uppercase font-light">
+          {{ store.author() || (isArabic() ? 'شجن' : 'SHAJAN') }}
+        </span>
+        <span class="text-white/5 text-[7px] tracking-[1em] ml-[1em] uppercase">shajan.ai</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex flex-col items-center gap-5 mt-12 w-full max-w-[380px]">
+    <div class="flex gap-3 w-full">
+      <button
+        (click)="onShare()"
+        [disabled]="!store.generatedContent() || store.isLoading()"
+        class="flex-1 bg-shajan-maroon hover:bg-shajan-maroon/80 text-shajan-gold px-6 py-5 rounded-2xl flex items-center justify-center gap-3 active:scale-95 disabled:opacity-20 transition-all duration-500 border border-shajan-gold/20 shadow-xl shadow-shajan-maroon/20 group"
+      >
+        <lucide-icon
+          [name]="shareIcon"
+          [size]="18"
+          class="group-hover:rotate-12 transition-transform"
+        ></lucide-icon>
+        <span class="font-tajawal text-sm font-bold tracking-wide italic">Share Story</span>
+      </button>
+
+      <button
+        (click)="onDownload()"
+        [disabled]="!store.generatedContent() || store.isLoading()"
+        title="Download Image"
+        class="bg-white/5 hover:bg-white/10 text-white p-5 rounded-2xl flex items-center justify-center active:scale-95 disabled:opacity-20 transition-all duration-500 border border-white/10 group"
+      >
+        <lucide-icon
+          [name]="downloadIcon"
+          [size]="20"
+          class="group-hover:translate-y-0.5 transition-transform"
+        ></lucide-icon>
+      </button>
+    </div>
+
+    <div class="flex items-center gap-3 opacity-20">
+      <div class="h-[1px] w-4 bg-white"></div>
+      <p class="text-white text-[9px] tracking-[0.3em] uppercase">9:16 Portrait Optimized</p>
+      <div class="h-[1px] w-4 bg-white"></div>
+    </div>
+  </div>
+</div>

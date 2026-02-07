@@ -1,0 +1,76 @@
+<section
+  class="max-w-2xl mx-auto p-8 sm:p-12 mt-16 glass-effect rounded-[3rem] relative overflow-hidden shadow-2xl border border-white/5 animate-fade-in"
+>
+  <div
+    class="absolute -top-32 -left-32 w-80 h-80 bg-shajan-maroon/15 blur-[120px] rounded-full pointer-events-none"
+  ></div>
+
+  <div class="relative z-10">
+    <header class="flex flex-col items-center text-center mb-10">
+      <div
+        class="p-4 bg-white/[0.02] border border-white/10 rounded-3xl mb-4 text-shajan-gold shadow-inner"
+      >
+        <lucide-icon [name]="sparklesIcon" [size]="32" [strokeWidth]="1.2"></lucide-icon>
+      </div>
+      <h2 class="text-4xl font-display text-white italic tracking-tight">
+        Echo <span class="text-shajan-gold">Your Soul</span>
+      </h2>
+      <p class="text-white/30 text-[10px] font-tajawal mt-3 tracking-[0.5em] uppercase">
+        {{ isArabic() ? 'ردد صدى مشاعرك' : 'Reflect your inner shajan' }}
+      </p>
+    </header>
+
+    <div class="relative group">
+      <textarea
+        [ngModel]="store.userInput()"
+        (ngModelChange)="store.updateInput($event)"
+        [placeholder]="
+          isArabic()
+            ? 'بماذا تشعر اليوم؟ شاركنا أفكارك...'
+            : 'How are you feeling today? Share your thoughts...'
+        "
+        class="w-full bg-white/[0.01] border border-white/5 rounded-[2.5rem] p-8 text-white text-xl font-tajawal placeholder-white/10 focus:outline-none focus:border-shajan-maroon/40 transition-all duration-700 min-h-[220px] leading-relaxed shadow-inner resize-none"
+        style="unicode-bidi: plaintext"
+      ></textarea>
+
+      <div
+        class="absolute bottom-4 right-8 opacity-0 group-focus-within:opacity-100 transition-opacity duration-700"
+      >
+        <span class="text-[10px] text-shajan-gold/20 font-sans tracking-widest uppercase"
+          >Shajan AI Typing Mode</span
+        >
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-10">
+      <button
+        (click)="generate('lyric')"
+        [disabled]="store.isLoading() || !store.userInput()"
+        class="btn-primary bg-white/[0.03] hover:bg-white/[0.08] border border-white/10 text-white py-5 rounded-full flex items-center justify-center gap-3 transition-all active:scale-95 disabled:opacity-20 disabled:grayscale"
+      >
+        <lucide-icon [name]="musicIcon" [size]="18"></lucide-icon>
+      </button>
+
+      <button
+        (click)="generate('quote')"
+        [disabled]="store.isLoading() || !store.userInput()"
+        class="btn-primary bg-white/[0.03] hover:bg-white/[0.08] border border-white/10 text-white py-5 rounded-full flex items-center justify-center gap-3 transition-all active:scale-95 disabled:opacity-20"
+      >
+        <lucide-icon [name]="quoteIcon" [size]="18" class="text-shajan-gold"></lucide-icon>
+      </button>
+    </div>
+
+    @if (store.isLoading()) {
+      <div class="mt-8 flex flex-col items-center gap-3 animate-fade-in">
+        <div class="flex gap-2">
+          <div class="w-1.5 h-1.5 bg-shajan-gold rounded-full animate-bounce"></div>
+          <div class="w-1.5 h-1.5 bg-shajan-gold rounded-full animate-bounce delay-150"></div>
+          <div class="w-1.5 h-1.5 bg-shajan-gold rounded-full animate-bounce delay-300"></div>
+        </div>
+        <p class="text-[9px] font-tajawal text-shajan-gold tracking-[0.6em] uppercase opacity-70">
+          {{ isArabic() ? 'جاري الاستحضار' : 'AI Curating' }}
+        </p>
+      </div>
+    }
+  </div>
+</section>

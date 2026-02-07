@@ -1,3 +1,44 @@
-/* You can add global styles to this file, and also import other style files */
+@import 'tailwindcss';
 
-@import "tailwindcss";
+@theme {
+  --color-shajan-maroon: #4a0404;
+  --color-shajan-gold: #c5a059;
+  --color-shajan-dark: #120202;
+
+  --font-display: 'Playfair Display', serif;
+  --font-tajawal: 'Tajawal', sans-serif;
+
+  /* إضافة الأنيميشن يدوياً لضمان عمله */
+  --animate-fade-in: fade-in 1.2s ease-out forwards;
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+:root {
+  font-family: 'Tajawal', sans-serif;
+}
+
+@layer base {
+  body {
+    /* تأكد من أن الخلفية ليست شفافة */
+    background-color: var(--color-shajan-dark);
+    @apply text-white antialiased;
+  }
+}
+
+@layer components {
+  .shajan-glass {
+    background: rgba(18, 2, 2, 0.8);
+    backdrop-filter: blur(25px);
+    border: 1px solid rgba(197, 160, 89, 0.1);
+  }
+}

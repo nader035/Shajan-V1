@@ -1,0 +1,13 @@
+.font-tajawal {
+  font-family: 'Tajawal', sans-serif;
+  /* تحسين المسافات بين السطور للعربي */
+  line-height: 1.6;
+  /* لجعل المتصفح يكتشف اتجاه اللغة تلقائياً (يمين أو يسار) */
+  unicode-bidi: plaintext;
+  text-align: center;
+}
+#shajan-card {
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+}

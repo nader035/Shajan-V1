@@ -1,26 +1,40 @@
 <nav
-  class="fixed top-0 w-full z-[100] glass-effect border-b border-white/5 py-5 px-10 flex justify-between items-center transition-all duration-500"
+  class="fixed top-6 left-1/2 -translate-x-1/2 z-[100] Marsa-glass px-6 py-3 rounded-full flex items-center gap-6 shadow-2xl transition-all duration-500 w-[90%] max-w-2xl"
 >
-  <div class="flex items-center gap-3">
-    <div
-      class="w-8 h-8 bg-shajan-maroon rounded-lg flex items-center justify-center border border-shajan-gold/20 shadow-lg shadow-shajan-maroon/20"
-    >
-      <span class="text-shajan-gold font-display text-xl pt-1">S</span>
-    </div>
-    <span class="text-white font-display text-2xl italic tracking-tighter">
-      {{ brandName() }}<span class="text-shajan-gold">.</span>
-    </span>
+  <button
+    (click)="toggleLang.emit()"
+    class="flex items-center gap-2 hover:text-Marsa-gold transition-colors font-sans text-[11px] tracking-widest uppercase outline-none cursor-pointer"
+  >
+    <lucide-icon [name]="langIcon" [size]="16" class="text-Marsa-gold"></lucide-icon>
+    <span class="hidden sm:inline">{{ lang() === 'ar' ? 'English' : 'عربي' }}</span>
+  </button>
+
+  <div class="h-4 w-[1px] bg-Marsa-gold/20"></div>
+
+  <div
+    class="flex-1 flex justify-center text-xl font-bold gradient-Marsa tracking-[0.3em] font-sans"
+  >
+    {{ lang() === 'ar' ? 'مَرسىء Marsa' : 'Marsa مَرسىء' }}
   </div>
 
-  <div class="flex items-center gap-6">
-    <button class="text-white/40 hover:text-shajan-gold transition-colors duration-300">
-      <lucide-icon [name]="githubIcon" [size]="20"></lucide-icon>
-    </button>
-    <div class="h-4 w-px bg-white/10"></div>
-    <button
-      class="flex items-center gap-2 text-[10px] font-sans tracking-[0.3em] uppercase text-white/40 hover:text-white transition-all"
-    >
-      v2.1 Stable
-    </button>
-  </div>
+  <div class="h-4 w-[1px] bg-Marsa-gold/20"></div>
+
+  <button
+    (click)="toggleTheme.emit()"
+    class="relative w-8 h-8 flex items-center justify-center rounded-full hover:bg-white/5 transition-all active:scale-90 outline-none cursor-pointer"
+  >
+    @if (isDark()) {
+      <lucide-icon
+        [name]="sunIcon"
+        [size]="18"
+        class="text-Marsa-gold animate-fade-in"
+      ></lucide-icon>
+    } @else {
+      <lucide-icon
+        [name]="moonIcon"
+        [size]="18"
+        class="text-Marsa-maroon animate-fade-in"
+      ></lucide-icon>
+    }
+  </button>
 </nav>

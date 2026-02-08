@@ -17,13 +17,13 @@ export class ShareService {
 
       // 2. تحويل الـ Data URL إلى Blob يدوياً لتجاوز حماية الـ CSP
       const blob = this.dataURItoBlob(dataUrl);
-      const file = new File([blob], `shajan-${Date.now()}.png`, { type: 'image/png' });
+      const file = new File([blob], `Marsa-${Date.now()}.png`, { type: 'image/png' });
 
       // 3. المشاركة أو التحميل
       if (navigator.canShare && navigator.canShare({ files: [file] })) {
         await navigator.share({
           files: [file],
-          title: 'Shajan AI',
+          title: 'Marsa AI',
           text: 'صدى مشاعري عبر شجن AI',
         });
       } else {
@@ -48,7 +48,7 @@ export class ShareService {
 
   private downloadFallback(dataUrl: string) {
     const link = document.createElement('a');
-    link.download = `shajan-echo-${Date.now()}.png`;
+    link.download = `Marsa-echo-${Date.now()}.png`;
     link.href = dataUrl;
     link.click();
   }

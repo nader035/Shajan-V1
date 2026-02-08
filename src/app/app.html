@@ -1,24 +1,43 @@
-<app-navbar></app-navbar>
+<app-navbar
+  [isDark]="isDarkMode()"
+  [lang]="currentLang()"
+  (toggleTheme)="onThemeToggle()"
+  (toggleLang)="onLanguageToggle()"
+></app-navbar>
 
-<main class="min-h-screen pt-32 pb-20 px-6 relative overflow-hidden bg-shajan-dark">
+<main
+  class="min-h-screen pt-32 pb-20 px-6 relative overflow-hidden transition-all duration-700 ease-in-out"
+  [style.backgroundColor]="'var(--color-background)'"
+>
   <div
-    class="absolute top-[20%] left-[-10%] w-[500px] h-[500px] bg-shajan-maroon/10 blur-[150px] rounded-full pointer-events-none"
-  ></div>
-  <div
-    class="absolute bottom-0 right-[-5%] w-[400px] h-[400px] bg-shajan-gold/5 blur-[120px] rounded-full pointer-events-none"
+    class="absolute top-[10%] left-[-5%] w-[600px] h-[600px] blur-[150px] rounded-full pointer-events-none transition-all duration-1000 animate-pulse"
+    [style.backgroundColor]="'var(--glow-color)'"
+    [style.opacity]="isDarkMode() ? '0.6' : '0.4'"
   ></div>
 
-  <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
-    <div class="lg:col-span-7">
-      <app-chat-area></app-chat-area>
+  <div
+    class="absolute bottom-[-10%] right-[-10%] w-[400px] h-[400px] bg-Marsa-gold/5 blur-[120px] rounded-full pointer-events-none transition-opacity duration-1000"
+    [class.opacity-0]="!isDarkMode()"
+  ></div>
+
+  <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-start relative z-10">
+    <div class="lg:col-span-7 animate-fade-in">
+      <app-chat-area [lang]="currentLang()"></app-chat-area>
     </div>
 
-    <div class="lg:col-span-5 sticky top-32">
-      <app-card-preview></app-card-preview>
+    <div class="lg:col-span-5 sticky top-32 animate-fade-in [animation-delay:300ms]">
+      <app-card-preview [lang]="currentLang()" [isDarkMode]="isDarkMode()"> </app-card-preview>
     </div>
   </div>
 
-  <footer class="mt-20 text-center text-white/10 text-[9px] tracking-[0.8em] uppercase">
-    Designed for the souls that echo
+  <footer
+    class="mt-32 text-center opacity-30 text-[9px] tracking-[1em] uppercase font-sans transition-all duration-700"
+    [style.color]="'var(--color-foreground)'"
+  >
+    {{
+      currentLang() === 'ar'
+        ? 'صُمم للأرواح التي تتردد أصداؤها'
+        : 'Designed for the souls that echo'
+    }}
   </footer>
 </main>

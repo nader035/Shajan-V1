@@ -1,7 +1,7 @@
-import { Component, inject, computed } from '@angular/core';
+import { Component, inject, computed, input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { LucideAngularModule, Sparkles, Music, Quote } from 'lucide-angular';
-import { ShajanStore } from '../../store/shajan.store';
+import { LucideAngularModule, Sparkles, Music, Quote, Book } from 'lucide-angular';
+import { MarsaStore } from '../../store/marsa.store';
 
 @Component({
   selector: 'app-chat-area',
@@ -11,33 +11,29 @@ import { ShajanStore } from '../../store/shajan.store';
   styleUrl: './chat-area.css',
 })
 export class ChatArea {
-  // حقن الـ Store باستخدام نظام الـ Signals الجديد في Angular 21
-  readonly store = inject(ShajanStore);
+  readonly store = inject(MarsaStore);
 
-  // تعريف أيقونات Lucide المستخدمة في الـ Template
+  // استقبال اللغة الحالية من المكون الأب (AppComponent)
+  // هذا هو المفتاح لتغيير النصوص فورياً من الـ Navbar
+  lang = input.required<'ar' | 'en'>();
+
   readonly sparklesIcon = Sparkles;
   readonly musicIcon = Music;
   readonly quoteIcon = Quote;
-
+  readonly bookIcon = Book;
   /**
-   * Signal محسوبة تكتشف لغة المستخدم فورياً أثناء الكتابة.
-   * تستخدم لتغيير الـ Placeholders ونصوص الأزرار في الـ HTML تلقائياً.
+   * دالة اكتشاف اللغة تم تحسينها:
+   * تعتمد أولاً على لغة التطبيق المختارة (Input)،
+   * وإذا بدأ المستخدم في الكتابة بلغة مختلفة، يمكننا ترك الـ CSS يتعامل مع الاتجاه.
    */
   isArabic = computed(() => {
-    const input = this.store.userInput();
-    // فحص لو النص يحتوي على حروف من النطاق العربي
-    return /[\u0600-\u06FF]/.test(input);
+    // إذا أردت أن تتبع النصوص لغة الـ Navbar دائماً:
+    return this.lang() === 'ar';
   });
 
-  /**
-   * دالة بدء توليد الصدى (Echo).
-   * @param type نوع المحتوى المطلوب (Lyric أو Quote)
-   */
-  generate(type: 'quote' | 'lyric') {
-    const inputLength = this.store.userInput().trim().length;
-
-    // تأكد من وجود مدخلات كافية (على الأقل 3 أحرف) قبل مناداة الـ API
-    if (inputLength >= 3 && !this.store.isLoading()) {
+  generate(type: 'quote' | 'lyric' | 'quran') {
+    // أضفنا quran هنا
+    if (this.store.userInput().trim().length >= 3 && !this.store.isLoading()) {
       this.store.generateVibe(type);
     }
   }

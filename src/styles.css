@@ -1,15 +1,53 @@
 @import 'tailwindcss';
 
+/* --- 1. الخطوط (Typography) --- */
+@font-face {
+  font-family: 'Myriad Pro';
+  src: url('./assets/fonts/English/MYRIADPRO-REGULAR.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Myriad Pro';
+  src: url('./assets/fonts/English/MYRIADPRO-BOLD.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Myriad Arabic';
+  src: url('./assets/fonts/Arabic/MMSFONTMyriadArabicPhone-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0600-06FF, U+0750-077F, U+FB50-FDFF, U+FE70-FEFF;
+}
+
+@font-face {
+  font-family: 'Myriad Arabic';
+  src: url('assets/fonts/Arabic/MMSFONTMyriadArabic-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0600-06FF, U+0750-077F, U+FB50-FDFF, U+FE70-FEFF;
+}
+
+/* --- 2. محرك الألوان (Theme Engine) 60-30-10 --- */
 @theme {
-  --color-shajan-maroon: #4a0404;
-  --color-shajan-gold: #c5a059;
-  --color-shajan-dark: #120202;
+  --color-Marsa-maroon: var(--accent-maroon);
+  --color-Marsa-gold: var(--accent-gold);
 
-  --font-display: 'Playfair Display', serif;
-  --font-tajawal: 'Tajawal', sans-serif;
+  --color-background: var(--bg-60);
+  --color-card: var(--card-30);
+  --color-foreground: var(--text-10);
+  --color-Marsa-border: var(--brd);
 
-  /* إضافة الأنيميشن يدوياً لضمان عمله */
   --animate-fade-in: fade-in 1.2s ease-out forwards;
+  --animate-scale-in: scale-in 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  --font-sans: 'Myriad Pro', 'Myriad Arabic', sans-serif;
 
   @keyframes fade-in {
     from {
@@ -21,24 +59,96 @@
       transform: translateY(0);
     }
   }
+  @keyframes scale-in {
+    from {
+      transform: scale(0.95) translateY(10px);
+      opacity: 0;
+    }
+    to {
+      transform: scale(1) translateY(0);
+      opacity: 1;
+    }
+  }
 }
 
 :root {
-  font-family: 'Tajawal', sans-serif;
+  /* PURE DARK (الأساسي - أسود ملكي بلمحة مارون) */
+  --bg-60: #0d0202;
+  --card-30: #1a0808;
+  --text-10: #f5f5f5;
+  --accent-maroon: #4a0404;
+  --accent-gold: #c5a059;
+  --glow-color: rgba(74, 4, 4, 0.4); /* توهج مارون عميق */
+  --brd: rgba(197, 160, 89, 0.15);
+  --current-font: 'Myriad Arabic', 'Myriad Pro', sans-serif;
 }
 
+body.light-theme {
+  /* DARK DIMMED (التبديل - رمادي فحمي احترافي) */
+  --bg-60: #161616; /* درجة رمادية أغمق قليلاً للرزانة */
+  --card-30: #1e1e1e; /* تباين بسيط جداً بين الكرت والخلفية */
+  --text-10: #d1d1d1; /* نص فضي مطفي يمنع إجهاد العين */
+  --accent-maroon: #8b0000; /* مارون داكن */
+  --accent-gold: #b8860b; /* ذهب عتيق (Antique Gold) يليق مع الرصاصي */
+  --glow-color: rgba(255, 255, 255, 0.03); /* توهج فضي "ضبابي" خافت جداً */
+  --brd: rgba(255, 255, 255, 0.04);
+}
+
+/* تبديل الخطوط بناءً على الاتجاه */
+[dir='rtl'] {
+  --current-font: 'Myriad Arabic', sans-serif;
+}
+[dir='ltr'] {
+  --current-font: 'Myriad Pro', sans-serif;
+}
+
+/* --- 4. الإعدادات الأساسية (Base) --- */
 @layer base {
   body {
-    /* تأكد من أن الخلفية ليست شفافة */
-    background-color: var(--color-shajan-dark);
-    @apply text-white antialiased;
+    background-color: var(--bg-60) !important;
+    color: var(--text-10) !important;
+    font-family: var(--current-font);
+    @apply antialiased transition-all duration-500 ease-in-out;
+    margin: 0;
+    min-height: 100vh;
+  }
+
+  #Marsa-card {
+    background-color: var(--card-30) !important;
+    color: var(--text-10) !important;
+    border: 1px solid var(--brd) !important;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    transition: all 0.5s ease;
   }
 }
 
-@layer components {
-  .shajan-glass {
-    background: rgba(18, 2, 2, 0.8);
-    backdrop-filter: blur(25px);
-    border: 1px solid rgba(197, 160, 89, 0.1);
+/* --- 5. الأدوات المساعدة (Utilities) --- */
+@layer utilities {
+  .Marsa-glass {
+    /* زجاج يتكيف مع الخلفية سواء كانت سوداء أو رمادية */
+    background-color: color-mix(in srgb, var(--card-30), transparent 20%);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--brd);
   }
+
+  .text-glow-gold {
+    text-shadow: 0 0 12px color-mix(in srgb, var(--accent-gold), transparent 40%);
+  }
+
+  .gradient-Marsa {
+    background: linear-gradient(to right, var(--accent-gold), var(--accent-maroon));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+button {
+  user-select: none;
+  cursor: pointer;
+  outline: none;
 }

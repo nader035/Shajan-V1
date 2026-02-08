@@ -4,14 +4,17 @@
     <meta
       http-equiv="Content-Security-Policy"
       content="default-src 'self'; 
-               script-src 'self' 'unsafe-eval' 'unsafe-inline'; 
-               style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; 
-               font-src 'self' https://fonts.gstatic.com; 
-               img-src 'self' data: blob:; 
-               connect-src 'self' https://generativelanguage.googleapis.com;"
+           script-src 'self' 'unsafe-eval' 'unsafe-inline'; 
+           style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; 
+           font-src 'self' data: https://fonts.gstatic.com; 
+           img-src 'self' data: blob:; 
+           connect-src 'self' 
+                       https://generativelanguage.googleapis.com 
+                       https://api.groq.com 
+                       https://api-inference.huggingface.co;"
     />
     <meta charset="utf-8" />
-    <title>Shajan</title>
+    <title>Marsa</title>
     <base href="/" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" type="image/x-icon" href="favicon.ico" />

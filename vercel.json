@@ -1,8 +1,8 @@
 {
   "rewrites": [
     {
-      "source": "/hf-api/(.*)",
-      "destination": "https://api-inference.huggingface.co/models/meta-llama/Llama-3.1-70B-Instruct/v1/$1"
+      "source": "/hf-api/:path*",
+      "destination": "https://api-inference.huggingface.co/models/meta-llama/Llama-3.1-70B-Instruct/v1/:path*"
     }
   ]
 }

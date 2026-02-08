@@ -7,8 +7,7 @@ import { environment } from '../../../environments/environment.development';
 export class AiService {
   private http = inject(HttpClient);
   private readonly apiKey = environment.hfToken;
-  private readonly apiUrl =
-    'https://api-inference.huggingface.co/models/meta-llama/Llama-3.1-70B-Instruct/v1/chat/completions';
+  private readonly apiUrl = '/hf-api/chat/completions';
   async generateMarsaEcho(
     prompt: string,
     type: 'quote' | 'lyric' | 'quran',
